@@ -1,0 +1,708 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>marrs.frida.agent &mdash; Marrs 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Marrs
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html#getting-started">Getting started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main classes docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../device.html">Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../app.html">App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../agent.html">FridaAgent</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Java wrapper classes docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../class.html">Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../method.html">Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../field.html">Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../constructor.html">Constructor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../instance.html">Instance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../array.html">Array</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Marrs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>marrs.frida.agent</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for marrs.frida.agent</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A Pythonic API (or wrapper) for `frida`&#39;s-like operations on an Android app.</span>
+<span class="sd">This object is attached to a specific app on a specific device.</span>
+<span class="sd">It lets you hook and call methods, change field&#39;s value, and more.</span>
+<span class="sd">Can be retrieved by calling :py:meth:`~marrs.app.App.attach_frida_agent` method on an :py:class:`~marrs.app.App` object.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">frida</span>
+
+<span class="kn">from</span> <span class="nn">.hooks.hooks_manager</span> <span class="kn">import</span> <span class="n">HooksManager</span>
+<span class="kn">from</span> <span class="nn">.output_window_client</span> <span class="kn">import</span> <span class="n">OutputWindowClient</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">is_simple_array_type</span><span class="p">,</span> \
+	<span class="n">convert_to_api_class_name</span><span class="p">,</span> <span class="n">java_primitive_type_to_wrapper_class</span><span class="p">,</span> <span class="n">is_java_class_type</span><span class="p">,</span> \
+	<span class="n">extract_base_elem_type_from_simple_arr_type</span>
+<span class="kn">from</span> <span class="nn">.wrappers</span> <span class="kn">import</span> <span class="n">Field</span><span class="p">,</span> <span class="n">Method</span><span class="p">,</span> <span class="n">Constructor</span><span class="p">,</span> <span class="n">Class</span>
+<span class="kn">from</span> <span class="nn">.wrappers.instance_factory</span> <span class="kn">import</span> <span class="n">InstanceFactory</span>
+<span class="kn">from</span> <span class="nn">.wrappers.instances</span> <span class="kn">import</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">get_dir_path</span><span class="p">,</span> <span class="n">read_file</span>
+
+
+<div class="viewcode-block" id="FridaAgent"><a class="viewcode-back" href="../../../agent.html#marrs.frida.agent.FridaAgent">[docs]</a><span class="k">class</span> <span class="nc">FridaAgent</span><span class="p">:</span>
+
+	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">initial_script</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">app</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">OutputWindowClient</span><span class="p">(</span><span class="n">device_id</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">app_name</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">hooks</span> <span class="o">=</span> <span class="n">HooksManager</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span>
+			<span class="s2">&quot;Creating new frida agent for app&quot;</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="n">initial_script</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">__warn__</span><span class="p">(</span>
+				<span class="s2">&quot;	Initial script is not empty and app is running so restarting app&quot;</span><span class="p">)</span>
+			<span class="n">app</span><span class="o">.</span><span class="n">force_stop</span><span class="p">()</span>
+			<span class="n">device</span> <span class="o">=</span> <span class="n">frida</span><span class="o">.</span><span class="n">get_device</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="s2">&quot;	Spawning app&quot;</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+			<span class="n">pid</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">spawn</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span>
+				<span class="s2">&quot;	Attaching to app&quot;</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="s2">&quot;pid=</span><span class="si">{pid}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pid</span><span class="o">=</span><span class="n">pid</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+
+			<span class="bp">self</span><span class="o">.</span><span class="n">__load_api__</span><span class="p">()</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">load_script</span><span class="p">(</span><span class="n">initial_script</span><span class="p">)</span>
+
+			<span class="n">device</span><span class="o">.</span><span class="n">resume</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+			<span class="k">return</span>
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">app</span><span class="o">.</span><span class="n">is_running</span><span class="p">():</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="s2">&quot;	App is not running, starting app&quot;</span><span class="p">)</span>
+			<span class="n">app</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">frida</span><span class="o">.</span><span class="n">get_device</span><span class="p">(</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">__load_api__</span><span class="p">()</span>
+
+	<span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+
+	<span class="k">def</span> <span class="nf">__print__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">started</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__load_api__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">api_js_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_dir_path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;..&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;bundle.js&#39;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">api_script</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_script_from_file</span><span class="p">(</span><span class="n">api_js_path</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">api</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api_script</span><span class="o">.</span><span class="n">exports</span>
+
+	<span class="k">def</span> <span class="nf">__on_message__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+		<span class="c1"># print(&quot;__on_message__&quot;, msg, data)</span>
+		<span class="n">msg_type</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+
+		<span class="k">if</span> <span class="n">msg_type</span> <span class="o">==</span> <span class="s1">&#39;send&#39;</span><span class="p">:</span>
+			<span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">&#39;payload&#39;</span><span class="p">])</span>
+			<span class="n">payload_type</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+			<span class="k">if</span> <span class="n">payload_type</span> <span class="o">==</span> <span class="s1">&#39;hook-enter&#39;</span><span class="p">:</span>
+				<span class="n">hook_id</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s1">&#39;hookId&#39;</span><span class="p">]</span>
+				<span class="n">hook</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hooks</span><span class="p">[</span><span class="n">hook_id</span><span class="p">]</span>
+				<span class="n">params</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">]</span>
+				<span class="n">orig_retval</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s1">&#39;originalRetVal&#39;</span><span class="p">]</span>
+				<span class="n">call_num</span> <span class="o">=</span> <span class="n">hook</span><span class="o">.</span><span class="n">inc_call_num</span><span class="p">()</span>
+
+				<span class="k">if</span> <span class="n">hook</span><span class="o">.</span><span class="n">show_output</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">__print__</span><span class="p">({</span>
+						<span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">payload_type</span><span class="p">,</span>
+						<span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="p">{</span>
+							<span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span>
+							<span class="s1">&#39;methodName&#39;</span><span class="p">:</span> <span class="n">hook</span><span class="o">.</span><span class="n">method_name</span><span class="p">,</span>
+							<span class="s1">&#39;className&#39;</span><span class="p">:</span> <span class="n">hook</span><span class="o">.</span><span class="n">class_name</span><span class="p">,</span>
+							<span class="s1">&#39;paramTypes&#39;</span><span class="p">:</span> <span class="n">hook</span><span class="o">.</span><span class="n">param_types</span><span class="p">,</span>
+							<span class="s1">&#39;callNum&#39;</span><span class="p">:</span> <span class="n">call_num</span>
+						<span class="p">},</span>
+					<span class="p">})</span>
+
+				<span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hooks</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">hook_id</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">orig_retval</span><span class="p">)</span>
+
+				<span class="k">if</span> <span class="n">hook</span><span class="o">.</span><span class="n">show_output</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">__print__</span><span class="p">({</span>
+						<span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;hook-leave&#39;</span><span class="p">,</span>
+						<span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="p">{</span>
+							<span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span>
+							<span class="s1">&#39;methodName&#39;</span><span class="p">:</span> <span class="n">hook</span><span class="o">.</span><span class="n">method_name</span><span class="p">,</span>
+							<span class="s1">&#39;className&#39;</span><span class="p">:</span> <span class="n">hook</span><span class="o">.</span><span class="n">class_name</span><span class="p">,</span>
+							<span class="s1">&#39;paramTypes&#39;</span><span class="p">:</span> <span class="n">hook</span><span class="o">.</span><span class="n">param_types</span><span class="p">,</span>
+							<span class="s1">&#39;callNum&#39;</span><span class="p">:</span> <span class="n">call_num</span><span class="p">,</span>
+							<span class="s1">&#39;retval&#39;</span><span class="p">:</span> <span class="n">retval</span>
+						<span class="p">},</span>
+					<span class="p">})</span>
+
+				<span class="bp">self</span><span class="o">.</span><span class="n">api_script</span><span class="o">.</span><span class="n">post</span><span class="p">({</span>
+					<span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;continue@&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">hook_id</span><span class="p">),</span>
+					<span class="s1">&#39;payload&#39;</span><span class="p">:</span> <span class="p">{</span>
+						<span class="s1">&#39;retval&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_to_api_js_value</span><span class="p">(</span><span class="n">retval</span><span class="p">)</span>
+					<span class="p">}</span>
+				<span class="p">})</span>
+
+		<span class="k">elif</span> <span class="n">msg_type</span> <span class="o">==</span> <span class="s1">&#39;error&#39;</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">__print__</span><span class="p">({</span>
+				<span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span>
+				<span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;stack&#39;</span><span class="p">]</span>
+			<span class="p">})</span>
+
+	<span class="k">def</span> <span class="nf">_get_params_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">param_types</span><span class="p">):</span>
+		<span class="n">converted_params</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_convert_to_api_js_value</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">param_types</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">param_types</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span>
+		                    <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">))]</span>
+
+		<span class="k">if</span> <span class="n">param_types</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="n">param_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">convert_to_api_class_name</span><span class="p">(</span><span class="n">pt</span><span class="p">)</span> <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">param_types</span><span class="p">]</span>
+
+		<span class="n">params_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+			<span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="n">converted_params</span><span class="p">,</span>
+			<span class="s1">&#39;paramTypes&#39;</span><span class="p">:</span> <span class="n">param_types</span>
+		<span class="p">})</span>
+
+		<span class="k">return</span> <span class="n">params_data</span>
+
+	<span class="k">def</span> <span class="nf">_value_data_to_python_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value_data</span><span class="p">):</span>
+		<span class="c1"># check if simple value</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+			<span class="k">return</span> <span class="n">value_data</span>
+
+		<span class="k">return</span> <span class="n">InstanceFactory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value_data</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">_convert_to_api_js_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">python_value</span><span class="p">,</span> <span class="n">elem_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">python_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="k">return</span> <span class="kc">None</span>
+
+		<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">python_value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+			<span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_convert_to_api_js_value</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">elem_type</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">python_value</span><span class="p">]</span>
+
+		<span class="c1"># If type is class type and value is not an instance, try to create new instance of that type</span>
+		<span class="k">if</span> <span class="n">is_java_class_type</span><span class="p">(</span><span class="n">elem_type</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">python_value</span><span class="p">,</span> <span class="n">Instance</span><span class="p">):</span>
+			<span class="n">python_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_instance</span><span class="p">(</span><span class="n">elem_type</span><span class="p">,</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">python_value</span><span class="p">)])</span>
+
+		<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">python_value</span><span class="p">,</span> <span class="n">Instance</span><span class="p">):</span>
+			<span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+				<span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">python_value</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+			<span class="p">})</span>
+
+		<span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+			<span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">python_value</span>
+		<span class="p">})</span>
+
+<div class="viewcode-block" id="FridaAgent.load_script_from_file"><a class="viewcode-back" href="../../../agent.html#marrs.frida.agent.FridaAgent.load_script_from_file">[docs]</a>	<span class="k">def</span> <span class="nf">load_script_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Load and run a script from file.</span>
+
+<span class="sd">		:param file_path: The script&#39;s file path</span>
+<span class="sd">		:type file_path: str</span>
+<span class="sd">		:return: `frida`&#39;s script object</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">script_code</span> <span class="o">=</span> <span class="n">read_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_script</span><span class="p">(</span><span class="n">script_code</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FridaAgent.load_script"><a class="viewcode-back" href="../../../agent.html#marrs.frida.agent.FridaAgent.load_script">[docs]</a>	<span class="k">def</span> <span class="nf">load_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">script_code</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Load and run a script.</span>
+
+<span class="sd">		:param script_code: The script&#39;s code to run</span>
+<span class="sd">		:type script_code: str</span>
+<span class="sd">		:return: `frida`&#39;s script object</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">script</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">create_script</span><span class="p">(</span><span class="n">script_code</span><span class="p">)</span>
+		<span class="n">script</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__on_message__</span><span class="p">)</span>
+		<span class="n">script</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+		<span class="k">return</span> <span class="n">script</span></div>
+
+<div class="viewcode-block" id="FridaAgent.kill"><a class="viewcode-back" href="../../../agent.html#marrs.frida.agent.FridaAgent.kill">[docs]</a>	<span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Kills the agent&#39;s output window (if exist) and detached from app.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+		<span class="c1"># TODO: Unloading all the scripts ?</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">frida_agent</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+	<span class="c1"># API methods</span>
+<div class="viewcode-block" id="FridaAgent.get_loaded_classes"><a class="viewcode-back" href="../../../agent.html#marrs.frida.agent.FridaAgent.get_loaded_classes">[docs]</a>	<span class="k">def</span> <span class="nf">get_loaded_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex_pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Get a list of loaded classes.</span>
+
+<span class="sd">		:param regex_pattern: Match classes&#39; names to this regex pattern</span>
+<span class="sd">		:type regex_pattern: str</span>
+<span class="sd">		:return: A list of loaded classes</span>
+<span class="sd">		:rtype: A list of :py:class:`~marrs.frida.wrappers.wclass.Class`</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">classes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">get_loaded_classes</span><span class="p">(</span><span class="n">regex_pattern</span><span class="p">)</span>
+		<span class="n">classes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">Class</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="p">),</span> <span class="n">classes</span><span class="p">))</span>
+		<span class="k">return</span> <span class="n">classes</span></div>
+
+<div class="viewcode-block" id="FridaAgent.get_methods"><a class="viewcode-back" href="../../../agent.html#marrs.frida.agent.FridaAgent.get_methods">[docs]</a>	<span class="k">def</span> <span class="nf">get_methods</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">is_static</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name_substr</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Get a list of methods of a specific class.</span>
+
+<span class="sd">		:param class_name: The full name of the class to get its methods</span>
+<span class="sd">		:type class_name: str</span>
+<span class="sd">		:param is_static: Get only static methods. None value (the default) will return both.</span>
+<span class="sd">		:type is_static: bool</span>
+<span class="sd">		:param name_substr: Match methods&#39; names that contain this substring</span>
+<span class="sd">		:type name_substr: str</span>
+<span class="sd">		:return: A list of methods</span>
+<span class="sd">		:rtype: A list of :py:class:`~marrs.frida.wrappers.wmethod.Method`</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">class_name</span> <span class="o">=</span> <span class="n">convert_to_api_class_name</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
+		<span class="n">methods</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">get_methods_of_class</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
+		<span class="n">methods</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">Method</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="bp">self</span><span class="p">),</span> <span class="n">methods</span><span class="p">))</span>
+
+		<span class="k">if</span> <span class="n">is_static</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="n">methods</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">is_static</span> <span class="o">==</span> <span class="n">is_static</span><span class="p">,</span> <span class="n">methods</span><span class="p">))</span>
+
+		<span class="k">if</span> <span class="n">name_substr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="n">methods</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">name_substr</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">methods</span><span class="p">))</span>
+
+		<span class="k">return</span> <span class="n">methods</span></div>
+
+<div class="viewcode-block" id="FridaAgent.get_fields"><a class="viewcode-back" href="../../../agent.html#marrs.frida.agent.FridaAgent.get_fields">[docs]</a>	<span class="k">def</span> <span class="nf">get_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">is_static</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name_substr</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Get a list of fields of a specific class.</span>
+
+<span class="sd">		:param class_name: The full name of the class to get its fields</span>
+<span class="sd">		:type class_name: str</span>
+<span class="sd">		:param is_static: Get only static fields. None value (the default) will return both.</span>
+<span class="sd">		:type is_static: bool</span>
+<span class="sd">		:param name_substr: Match fields&#39; names that contain this substring</span>
+<span class="sd">		:type name_substr: str</span>
+<span class="sd">		:return: A list of fields</span>
+<span class="sd">		:rtype: A list of :py:class:`~marrs.frida.wrappers.wfield.Field`</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="n">class_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;class_name is None&#39;</span><span class="p">)</span>
+
+		<span class="n">class_name</span> <span class="o">=</span> <span class="n">convert_to_api_class_name</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
+		<span class="n">fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">get_fields_of_class</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
+
+		<span class="n">fields</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">Field</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="p">),</span> <span class="n">fields</span><span class="p">))</span>
+
+		<span class="k">if</span> <span class="n">is_static</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="n">fields</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">is_static</span> <span class="o">==</span> <span class="n">is_static</span><span class="p">,</span> <span class="n">fields</span><span class="p">))</span>
+
+		<span class="k">if</span> <span class="n">name_substr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="n">fields</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">name_substr</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">fields</span><span class="p">))</span>
+
+		<span class="k">return</span> <span class="n">fields</span></div>
+
+<div class="viewcode-block" id="FridaAgent.get_instances"><a class="viewcode-back" href="../../../agent.html#marrs.frida.agent.FridaAgent.get_instances">[docs]</a>	<span class="k">def</span> <span class="nf">get_instances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_name</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Get all the living instances of a given class.</span>
+
+<span class="sd">		:param class_name: The full name of the class to get its living instances</span>
+<span class="sd">		:type class_name: str</span>
+<span class="sd">		:return: A list of instances</span>
+<span class="sd">		:rtype: A list of :py:class:`~marrs.frida.wrappers.winstance.Instance`</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">class_name</span> <span class="o">=</span> <span class="n">convert_to_api_class_name</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
+		<span class="n">instances_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">get_instances_of_class</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
+		<span class="n">instances_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">idata</span><span class="p">:</span> <span class="n">InstanceFactory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idata</span><span class="p">),</span> <span class="n">instances_data</span><span class="p">))</span>
+		<span class="k">return</span> <span class="n">instances_data</span></div>
+
+<div class="viewcode-block" id="FridaAgent.get_class"><a class="viewcode-back" href="../../../agent.html#marrs.frida.agent.FridaAgent.get_class">[docs]</a>	<span class="k">def</span> <span class="nf">get_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_name</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Get a loaded class by its name.</span>
+
+<span class="sd">		:param class_name: The full name of the class</span>
+<span class="sd">		:type class_name: str</span>
+<span class="sd">		:return: A class object</span>
+<span class="sd">		:rtype: :py:class:`~marrs.frida.wrappers.wclass.Class`</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">class_name</span> <span class="o">=</span> <span class="n">convert_to_api_class_name</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
+		<span class="n">class_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">get_class</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
+		<span class="k">return</span> <span class="n">Class</span><span class="p">(</span><span class="n">class_data</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FridaAgent.get_constructors"><a class="viewcode-back" href="../../../agent.html#marrs.frida.agent.FridaAgent.get_constructors">[docs]</a>	<span class="k">def</span> <span class="nf">get_constructors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_name</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Get a list of constructors of a given class.</span>
+
+<span class="sd">		:param class_name: The full name of the class</span>
+<span class="sd">		:type class_name: str</span>
+<span class="sd">		:return: A list of constructors objects</span>
+<span class="sd">		:rtype: A list of :py:class:`~marrs.frida.wrappers.wconstructor.Constructor`</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">constructors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">get_constructors_of_class</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
+		<span class="n">constructors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">Constructor</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="p">),</span> <span class="n">constructors</span><span class="p">))</span>
+		<span class="k">return</span> <span class="n">constructors</span></div>
+
+<div class="viewcode-block" id="FridaAgent.new_instance"><a class="viewcode-back" href="../../../agent.html#marrs.frida.agent.FridaAgent.new_instance">[docs]</a>	<span class="k">def</span> <span class="nf">new_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">[],</span> <span class="n">param_types</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Create a new instance of a given class.</span>
+
+<span class="sd">		Can be used as method&#39;s param or a field&#39;s value.</span>
+
+<span class="sd">		Examples:</span>
+
+<span class="sd">		.. code-block:: python</span>
+
+<span class="sd">		   agent.new_instance(&quot;int&quot;, [3])</span>
+<span class="sd">		   agent.new_instance(&quot;double&quot;, [3.3])</span>
+<span class="sd">		   agent.new_instance(&quot;java.lang.String&quot;, [&#39;somestr&#39;])</span>
+<span class="sd">		   agent.new_instance(&quot;com.example.SomeClass&quot;, [[[1, 2], [3, 2]]], [&#39;int[][]&#39;])</span>
+<span class="sd">		   agent.new_instance(&quot;com.example.SomeClass&quot;, [1, 1, &#39;1&#39;, &#39;1&#39;, False, 1, 1, 1],</span>
+<span class="sd">		                                    [&#39;java.lang.Integer&#39;, &#39;java.lang.Double&#39;, &#39;java.lang.Character&#39;,</span>
+<span class="sd">		                                    &#39;java.lang.String&#39;, &#39;java.lang.Boolean&#39;, &#39;java.lang.Byte&#39;,</span>
+<span class="sd">		                                    &#39;java.lang.Long&#39;, &#39;java.lang.Float&#39;])</span>
+<span class="sd">		   agent.new_instance(&quot;com.example.SomeClass&quot;, [agent.new_instance(&#39;java.lang.Integer&#39;, [3])])</span>
+
+<span class="sd">		:param class_name: The full name of the class to create instance of</span>
+<span class="sd">		:type class_name: str</span>
+<span class="sd">		:param params: The constructor&#39;s parameters list</span>
+<span class="sd">		:type params: list</span>
+<span class="sd">		:param param_types: The constructor&#39;s parameters types list. This param is optional, if the constructor is overloaded you might need to specify the constructor param types.</span>
+<span class="sd">		:type param_types: list</span>
+<span class="sd">		:return: The new created instance</span>
+<span class="sd">		:rtype: :py:class:`~marrs.frida.wrappers.winstance.Instance`</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="n">is_simple_array_type</span><span class="p">(</span><span class="n">class_name</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Use &#39;</span><span class="si">{0}</span><span class="s2">&#39; function to create an array&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_array</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+
+		<span class="k">if</span> <span class="n">param_types</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">param_types</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+				<span class="s2">&quot;len(params) != len(param_types), className=</span><span class="si">{0}</span><span class="s2">, params=</span><span class="si">{1}</span><span class="s2">, param_types=</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span>
+				                                                                                     <span class="n">param_types</span><span class="p">))</span>
+
+		<span class="n">class_name</span> <span class="o">=</span> <span class="n">java_primitive_type_to_wrapper_class</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
+
+		<span class="n">params_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_params_data</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">param_types</span><span class="p">)</span>
+		<span class="n">instance_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">create_instance</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">params_data</span><span class="p">)</span>
+		<span class="k">return</span> <span class="n">InstanceFactory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance_data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FridaAgent.new_array"><a class="viewcode-back" href="../../../agent.html#marrs.frida.agent.FridaAgent.new_array">[docs]</a>	<span class="k">def</span> <span class="nf">new_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr_type</span><span class="p">,</span> <span class="n">arr_list</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Create a new array instance.</span>
+
+<span class="sd">		Can be used as method&#39;s param or a field&#39;s value.</span>
+
+<span class="sd">		Examples:</span>
+
+<span class="sd">		.. code-block:: python</span>
+
+<span class="sd">		   agent.new_array(&quot;int[]&quot;, [1, 2, 3])</span>
+<span class="sd">		   agent.new_array(&quot;int[][]&quot;, [[18, 2, 3], [12, 1, 1], [2, 2, 2]])</span>
+<span class="sd">		   agent.new_array(&#39;java.lang.Integer[][][]&#39;, [[[1]], [[2], [9]], [[3]]])</span>
+<span class="sd">		   agent.new_array(&quot;java.lang.Integer[]&quot;, [agent.new_instance(&#39;java.lang.Integer&#39;, [1]),</span>
+<span class="sd">	                                               agent.new_instance(&#39;java.lang.Integer&#39;, [2]),</span>
+<span class="sd">	                                               agent.new_instance(&#39;java.lang.Integer&#39;, [3])])</span>
+
+
+<span class="sd">		:param arr_type: The type of the array.</span>
+<span class="sd">		:type arr_type: str</span>
+<span class="sd">		:param arr_list: The items of the array</span>
+<span class="sd">		:type arr_list: list</span>
+<span class="sd">		:return: The new created array</span>
+<span class="sd">		:rtype: :py:class:`~marrs.frida.wrappers.warray.Array`</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">is_simple_array_type</span><span class="p">(</span><span class="n">arr_type</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;arr_type is not an array type&quot;</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arr_list</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The given arr_list must be of a list type&quot;</span><span class="p">)</span>
+
+		<span class="n">elem_type</span> <span class="o">=</span> <span class="n">extract_base_elem_type_from_simple_arr_type</span><span class="p">(</span><span class="n">arr_type</span><span class="p">)</span>
+		<span class="n">converted_elems</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_convert_to_api_js_value</span><span class="p">(</span><span class="n">arr_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">elem_type</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr_list</span><span class="p">))]</span>
+
+		<span class="n">arr_type</span> <span class="o">=</span> <span class="n">convert_to_api_class_name</span><span class="p">(</span><span class="n">arr_type</span><span class="p">)</span>
+
+		<span class="n">array_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="n">arr_type</span><span class="p">,</span> <span class="n">converted_elems</span><span class="p">)</span>
+		<span class="k">return</span> <span class="n">InstanceFactory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array_data</span><span class="p">)</span></div>
+
+	<span class="k">def</span> <span class="nf">__to_string__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance_id</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">instance_id</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__call_instance_method__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance_id</span><span class="p">,</span> <span class="n">method_name</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">[],</span> <span class="n">param_types</span><span class="o">=</span><span class="p">[]):</span>
+		<span class="n">params_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_params_data</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">param_types</span><span class="p">)</span>
+		<span class="n">value_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">call_method</span><span class="p">(</span><span class="n">method_name</span><span class="p">,</span> <span class="n">params_data</span><span class="p">,</span> <span class="n">instance_id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_data_to_python_value</span><span class="p">(</span><span class="n">value_data</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FridaAgent.call_static_method"><a class="viewcode-back" href="../../../agent.html#marrs.frida.agent.FridaAgent.call_static_method">[docs]</a>	<span class="k">def</span> <span class="nf">call_static_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">method_name</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">[],</span> <span class="n">param_types</span><span class="o">=</span><span class="p">[]):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Call a static method of a class (and get the result value).</span>
+
+<span class="sd">		Examples:</span>
+
+<span class="sd">		.. code-block:: python</span>
+
+<span class="sd">		   ret_val = agent.call_static_method(&quot;com.example.SomeClass&quot;, &quot;someStaticMethod1&quot;, [&quot;someStr&quot;], [&quot;java.lang.String&quot;])</span>
+<span class="sd">		   ret_val = agent.call_static_method(&quot;com.example.SomeClass&quot;, &quot;someStaticMethod2&quot;, [1, 3], [&#39;int&#39;, &#39;double&#39;])</span>
+<span class="sd">		   ret_val = agent.call_static_method(&quot;com.example.SomeClass&quot;, &quot;someNotOverloadedMethod&quot;, [&quot;someStr&quot;, 3])</span>
+<span class="sd">		   ret_val = agent.call_static_method(&quot;com.example.SomeClass&quot;, &quot;someNoParamsMethod&quot;)</span>
+
+
+<span class="sd">		:param class_name: The name of the class</span>
+<span class="sd">		:type class_name: str</span>
+<span class="sd">		:param method_name: The name of the method to call to</span>
+<span class="sd">		:type method_name: str</span>
+<span class="sd">		:return: The return value of the method</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">class_name</span> <span class="o">=</span> <span class="n">convert_to_api_class_name</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
+		<span class="n">params_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_params_data</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">param_types</span><span class="p">)</span>
+		<span class="n">value_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">call_method</span><span class="p">(</span><span class="n">method_name</span><span class="p">,</span> <span class="n">params_data</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_data_to_python_value</span><span class="p">(</span><span class="n">value_data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FridaAgent.get_static_field_value"><a class="viewcode-back" href="../../../agent.html#marrs.frida.agent.FridaAgent.get_static_field_value">[docs]</a>	<span class="k">def</span> <span class="nf">get_static_field_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Get the value of static field of a class.</span>
+
+<span class="sd">		For example:</span>
+
+<span class="sd">		.. code-block:: python</span>
+
+<span class="sd">		   ret_val = agent.get_static_field_value(&quot;com.example.SomeClass&quot;, &quot;someStaticFieldName&quot;)</span>
+
+
+<span class="sd">		:param class_name: The name of the class</span>
+<span class="sd">		:type class_name: str</span>
+<span class="sd">		:param field_name: The name of the field to get its value</span>
+<span class="sd">		:type field_name: str</span>
+<span class="sd">		:return: The value of the field</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_field_value__</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span></div>
+
+	<span class="k">def</span> <span class="nf">__get_field_value__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">instance_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+		<span class="n">class_name</span> <span class="o">=</span> <span class="n">convert_to_api_class_name</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
+		<span class="n">value_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">get_field_value</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">instance_id</span><span class="p">)</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_data_to_python_value</span><span class="p">(</span><span class="n">value_data</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FridaAgent.set_static_field_value"><a class="viewcode-back" href="../../../agent.html#marrs.frida.agent.FridaAgent.set_static_field_value">[docs]</a>	<span class="k">def</span> <span class="nf">set_static_field_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Set the value of static field of a class.</span>
+
+<span class="sd">		For example:</span>
+
+<span class="sd">		.. code-block:: python</span>
+
+<span class="sd">		   ret_val = agent.get_static_field_value(&quot;com.example.SomeClass&quot;, &quot;someStaticFieldName&quot;)</span>
+
+
+<span class="sd">		:param class_name: The name of the class</span>
+<span class="sd">		:type class_name: str</span>
+<span class="sd">		:param field_name: The name of the field to get set its value</span>
+<span class="sd">		:type field_name: str</span>
+<span class="sd">		:param new_value: The new value to set</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">__set_field_value__</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">new_value</span><span class="p">)</span></div>
+
+	<span class="k">def</span> <span class="nf">__set_field_value__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">new_value</span><span class="p">,</span> <span class="n">instance_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+		<span class="n">class_name</span> <span class="o">=</span> <span class="n">convert_to_api_class_name</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
+		<span class="n">value_to_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_to_api_js_value</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">set_field_value</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">value_to_set</span><span class="p">,</span> <span class="n">instance_id</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FridaAgent.run_js"><a class="viewcode-back" href="../../../agent.html#marrs.frida.agent.FridaAgent.run_js">[docs]</a>	<span class="k">def</span> <span class="nf">run_js</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">js_code</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Run Javascript code and get the result.</span>
+
+<span class="sd">		For example:</span>
+
+<span class="sd">		.. code-block:: python</span>
+
+<span class="sd">		   ret_val = agent.run_js(&quot;3+5&quot;)</span>
+<span class="sd">		   assert(ret_val == 8)</span>
+
+
+<span class="sd">		:param js_code: The Javascript code to run</span>
+<span class="sd">		:type js_code: str</span>
+<span class="sd">		:return: The result value</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">value_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">run_js</span><span class="p">(</span><span class="n">js_code</span><span class="p">)</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_data_to_python_value</span><span class="p">(</span><span class="n">value_data</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Oran Gilboa.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,518 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Device &mdash; Marrs 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="App" href="app.html" />
+    <link rel="prev" title="Introduction" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Marrs
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#getting-started">Getting started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main classes docs</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app.html">App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agent.html">FridaAgent</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Java wrapper classes docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class.html">Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="method.html">Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="field.html">Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructor.html">Constructor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="instance.html">Instance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="array.html">Array</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Marrs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Device</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/device.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-marrs.device">
+<span id="device"></span><h1>Device<a class="headerlink" href="#module-marrs.device" title="Permalink to this headline">¶</a></h1>
+<p>Represents a connected Android Device</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="marrs.device.Device">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">marrs.device.</span></span><span class="sig-name descname"><span class="pre">Device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adb_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'adb'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.clear_app_data">
+<span class="sig-name descname"><span class="pre">clear_app_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.clear_app_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.clear_app_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear application data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>app_name</strong> (<em>str</em>) – The name of the app to clear data for.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.delete_frida_server">
+<span class="sig-name descname"><span class="pre">delete_frida_server</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.delete_frida_server"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.delete_frida_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes all the files which their path mathches the following pattern: ‘/data/local/tmp/frida-server-*’</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.force_stop_app">
+<span class="sig-name descname"><span class="pre">force_stop_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.force_stop_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.force_stop_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Force stop application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>app_name</strong> (<em>str</em>) – The name of the app to force stop.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.get_android_version">
+<span class="sig-name descname"><span class="pre">get_android_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.get_android_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.get_android_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the android version of the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Android version of the device</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.get_api_level">
+<span class="sig-name descname"><span class="pre">get_api_level</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.get_api_level"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.get_api_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the API level of the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>API level of the device</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.get_app">
+<span class="sig-name descname"><span class="pre">get_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.get_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.get_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get app by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>app_name</strong> (<em>str</em>) – The name of the app</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="app.html#marrs.app.App" title="marrs.app.App"><code class="xref py py-class docutils literal notranslate"><span class="pre">App</span></code></a> object if app with the given name is installed on the device, None otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="app.html#marrs.app.App" title="marrs.app.App"><code class="xref py py-class docutils literal notranslate"><span class="pre">App</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.get_app_version">
+<span class="sig-name descname"><span class="pre">get_app_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.get_app_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.get_app_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get application installed version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>app_name</strong> (<em>str</em>) – The full name of the app</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The version of the given app</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.get_apps">
+<span class="sig-name descname"><span class="pre">get_apps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_substr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.get_apps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.get_apps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of apps installed on the device.
+:param name_substr: Specify to return apps which their name contains this string
+:type name_substr: str
+:return: A list of apps
+:rtype: List of :py:class:<a href="#id1"><span class="problematic" id="id2">`</span></a>~marrs.app.App`s</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.get_arch">
+<span class="sig-name descname"><span class="pre">get_arch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.get_arch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.get_arch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the architechture of the device (arm64 / arm / x86_64 / x86)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The architecture of the device</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.install_app">
+<span class="sig-name descname"><span class="pre">install_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">apk_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_install</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.install_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.install_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Install an APK file on the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>apk_path</strong> (<em>str</em>) – The path to the APK file</p></li>
+<li><p><strong>force_install</strong> (<em>bool</em>) – If True, will install the APK if the app with the same version is already installed on the device</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The <a class="reference internal" href="app.html#marrs.app.App" title="marrs.app.App"><code class="xref py py-class docutils literal notranslate"><span class="pre">App</span></code></a> object of the installed app</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="app.html#marrs.app.App" title="marrs.app.App"><code class="xref py py-class docutils literal notranslate"><span class="pre">App</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.is_app_installed">
+<span class="sig-name descname"><span class="pre">is_app_installed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.is_app_installed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.is_app_installed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if app is installed on the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>app_name</strong> (<em>str</em>) – The name of the application</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if the app is installed on the device, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.is_app_running">
+<span class="sig-name descname"><span class="pre">is_app_running</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.is_app_running"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.is_app_running" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if app is running.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>app_name</strong> (<em>str</em>) – The name of the app</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if app is running, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.is_frida_server_running">
+<span class="sig-name descname"><span class="pre">is_frida_server_running</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frida_process_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'frida-server'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.is_frida_server_running"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.is_frida_server_running" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if frida server is running on the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>frida_process_name</strong> (<em>str</em>) – The name of the frida server process</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if frida server is running, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.is_rooted">
+<span class="sig-name descname"><span class="pre">is_rooted</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.is_rooted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.is_rooted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if device is rooted (by trying to run ‘su root’).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if device is rooted, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.kill_frida_server">
+<span class="sig-name descname"><span class="pre">kill_frida_server</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.kill_frida_server"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.kill_frida_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kills frida server’s procces.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>Exception: If failed to kill the process</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.run_frida_server">
+<span class="sig-name descname"><span class="pre">run_frida_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frida_server_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'14.2.18'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.run_frida_server"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.run_frida_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run frida server of the given version on the device.
+First it will check if the binary is already exists on the device. If so, will run it.
+If it doesn’t exist, it will check if the binary exists in the package’s store. If so, it will take it from there.
+Otherwise, it will try to download the binary from the internet, upload it and run it on the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>frida_server_version</strong> (<em>str</em>) – the frida server’s version to run on the device</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – If the device is not rooted or if failed to run frida server on the device.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.shell">
+<span class="sig-name descname"><span class="pre">shell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.shell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.shell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run shell command on the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> (<em>str</em>) – The cmd to run.</p></li>
+<li><p><strong>wait</strong> (<em>bool</em>) – Should wait for the execution to finish</p></li>
+<li><p><strong>as_root</strong> (<em>bool</em>) – Run the command as root (supported only on rooted device with <cite>su</cite> binary)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The output if wait=True, the Popen object otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.start_app">
+<span class="sig-name descname"><span class="pre">start_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">main_activity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.start_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.start_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start application on the device.
+Will do nothing if app is already running.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>app_name</strong> (<em>str</em>) – The name of the app to start.</p></li>
+<li><p><strong>main_activity</strong> (<em>str</em>) – the main activity of the application to start. If None, it will extract it from the app’s apk that exists on the device.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – If the device is not rooted or if failed to run frida server on the device.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.summary">
+<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints some details about the device.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.device.Device.uninstall_app">
+<span class="sig-name descname"><span class="pre">uninstall_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/device.html#Device.uninstall_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.device.Device.uninstall_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uninstall application from the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>app_name</strong> (<em>str</em>) – The application’s name to uninstall.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="app.html" class="btn btn-neutral float-right" title="App" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Oran Gilboa.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,529 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>FridaAgent &mdash; Marrs 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Class" href="class.html" />
+    <link rel="prev" title="App" href="app.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Marrs
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#getting-started">Getting started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main classes docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="device.html">Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app.html">App</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FridaAgent</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Java wrapper classes docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class.html">Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="method.html">Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="field.html">Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructor.html">Constructor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="instance.html">Instance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="array.html">Array</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Marrs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>FridaAgent</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/agent.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-marrs.frida.agent">
+<span id="fridaagent"></span><h1>FridaAgent<a class="headerlink" href="#module-marrs.frida.agent" title="Permalink to this headline">¶</a></h1>
+<p>A Pythonic API (or wrapper) for <cite>frida</cite>’s-like operations on an Android app.
+This object is attached to a specific app on a specific device.
+It lets you hook and call methods, change field’s value, and more.
+Can be retrieved by calling <a class="reference internal" href="app.html#marrs.app.App.attach_frida_agent" title="marrs.app.App.attach_frida_agent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">attach_frida_agent()</span></code></a> method on an <a class="reference internal" href="app.html#marrs.app.App" title="marrs.app.App"><code class="xref py py-class docutils literal notranslate"><span class="pre">App</span></code></a> object.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="marrs.frida.agent.FridaAgent">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">marrs.frida.agent.</span></span><span class="sig-name descname"><span class="pre">FridaAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_script</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/frida/agent.html#FridaAgent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.frida.agent.FridaAgent" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="marrs.frida.agent.FridaAgent.call_static_method">
+<span class="sig-name descname"><span class="pre">call_static_method</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/frida/agent.html#FridaAgent.call_static_method"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.frida.agent.FridaAgent.call_static_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call a static method of a class (and get the result value).</p>
+<p>Examples:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ret_val</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">call_static_method</span><span class="p">(</span><span class="s2">&quot;com.example.SomeClass&quot;</span><span class="p">,</span> <span class="s2">&quot;someStaticMethod1&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;someStr&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;java.lang.String&quot;</span><span class="p">])</span>
+<span class="n">ret_val</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">call_static_method</span><span class="p">(</span><span class="s2">&quot;com.example.SomeClass&quot;</span><span class="p">,</span> <span class="s2">&quot;someStaticMethod2&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;int&#39;</span><span class="p">,</span> <span class="s1">&#39;double&#39;</span><span class="p">])</span>
+<span class="n">ret_val</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">call_static_method</span><span class="p">(</span><span class="s2">&quot;com.example.SomeClass&quot;</span><span class="p">,</span> <span class="s2">&quot;someNotOverloadedMethod&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;someStr&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">ret_val</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">call_static_method</span><span class="p">(</span><span class="s2">&quot;com.example.SomeClass&quot;</span><span class="p">,</span> <span class="s2">&quot;someNoParamsMethod&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_name</strong> (<em>str</em>) – The name of the class</p></li>
+<li><p><strong>method_name</strong> (<em>str</em>) – The name of the method to call to</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The return value of the method</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.frida.agent.FridaAgent.get_class">
+<span class="sig-name descname"><span class="pre">get_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/frida/agent.html#FridaAgent.get_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.frida.agent.FridaAgent.get_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a loaded class by its name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>class_name</strong> (<em>str</em>) – The full name of the class</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A class object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="class.html#marrs.frida.wrappers.wclass.Class" title="marrs.frida.wrappers.wclass.Class"><code class="xref py py-class docutils literal notranslate"><span class="pre">Class</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.frida.agent.FridaAgent.get_constructors">
+<span class="sig-name descname"><span class="pre">get_constructors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/frida/agent.html#FridaAgent.get_constructors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.frida.agent.FridaAgent.get_constructors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of constructors of a given class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>class_name</strong> (<em>str</em>) – The full name of the class</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of constructors objects</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A list of <a class="reference internal" href="constructor.html#marrs.frida.wrappers.wconstructor.Constructor" title="marrs.frida.wrappers.wconstructor.Constructor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Constructor</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.frida.agent.FridaAgent.get_fields">
+<span class="sig-name descname"><span class="pre">get_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_static</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_substr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/frida/agent.html#FridaAgent.get_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.frida.agent.FridaAgent.get_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of fields of a specific class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_name</strong> (<em>str</em>) – The full name of the class to get its fields</p></li>
+<li><p><strong>is_static</strong> (<em>bool</em>) – Get only static fields. None value (the default) will return both.</p></li>
+<li><p><strong>name_substr</strong> (<em>str</em>) – Match fields’ names that contain this substring</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of fields</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A list of <a class="reference internal" href="field.html#marrs.frida.wrappers.wfield.Field" title="marrs.frida.wrappers.wfield.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.frida.agent.FridaAgent.get_instances">
+<span class="sig-name descname"><span class="pre">get_instances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/frida/agent.html#FridaAgent.get_instances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.frida.agent.FridaAgent.get_instances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the living instances of a given class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>class_name</strong> (<em>str</em>) – The full name of the class to get its living instances</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of instances</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">Instance</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.frida.agent.FridaAgent.get_loaded_classes">
+<span class="sig-name descname"><span class="pre">get_loaded_classes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regex_pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/frida/agent.html#FridaAgent.get_loaded_classes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.frida.agent.FridaAgent.get_loaded_classes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of loaded classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>regex_pattern</strong> (<em>str</em>) – Match classes’ names to this regex pattern</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of loaded classes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A list of <a class="reference internal" href="class.html#marrs.frida.wrappers.wclass.Class" title="marrs.frida.wrappers.wclass.Class"><code class="xref py py-class docutils literal notranslate"><span class="pre">Class</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.frida.agent.FridaAgent.get_methods">
+<span class="sig-name descname"><span class="pre">get_methods</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_static</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_substr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/frida/agent.html#FridaAgent.get_methods"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.frida.agent.FridaAgent.get_methods" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of methods of a specific class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_name</strong> (<em>str</em>) – The full name of the class to get its methods</p></li>
+<li><p><strong>is_static</strong> (<em>bool</em>) – Get only static methods. None value (the default) will return both.</p></li>
+<li><p><strong>name_substr</strong> (<em>str</em>) – Match methods’ names that contain this substring</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of methods</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A list of <a class="reference internal" href="method.html#marrs.frida.wrappers.wmethod.Method" title="marrs.frida.wrappers.wmethod.Method"><code class="xref py py-class docutils literal notranslate"><span class="pre">Method</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.frida.agent.FridaAgent.get_static_field_value">
+<span class="sig-name descname"><span class="pre">get_static_field_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/frida/agent.html#FridaAgent.get_static_field_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.frida.agent.FridaAgent.get_static_field_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value of static field of a class.</p>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ret_val</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">get_static_field_value</span><span class="p">(</span><span class="s2">&quot;com.example.SomeClass&quot;</span><span class="p">,</span> <span class="s2">&quot;someStaticFieldName&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_name</strong> (<em>str</em>) – The name of the class</p></li>
+<li><p><strong>field_name</strong> (<em>str</em>) – The name of the field to get its value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value of the field</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.frida.agent.FridaAgent.kill">
+<span class="sig-name descname"><span class="pre">kill</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/frida/agent.html#FridaAgent.kill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.frida.agent.FridaAgent.kill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kills the agent’s output window (if exist) and detached from app.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.frida.agent.FridaAgent.load_script">
+<span class="sig-name descname"><span class="pre">load_script</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">script_code</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/frida/agent.html#FridaAgent.load_script"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.frida.agent.FridaAgent.load_script" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load and run a script.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>script_code</strong> (<em>str</em>) – The script’s code to run</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>frida</cite>’s script object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.frida.agent.FridaAgent.load_script_from_file">
+<span class="sig-name descname"><span class="pre">load_script_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/frida/agent.html#FridaAgent.load_script_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.frida.agent.FridaAgent.load_script_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load and run a script from file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – The script’s file path</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>frida</cite>’s script object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.frida.agent.FridaAgent.new_array">
+<span class="sig-name descname"><span class="pre">new_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arr_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/frida/agent.html#FridaAgent.new_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.frida.agent.FridaAgent.new_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new array instance.</p>
+<p>Can be used as method’s param or a field’s value.</p>
+<p>Examples:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">agent</span><span class="o">.</span><span class="n">new_array</span><span class="p">(</span><span class="s2">&quot;int[]&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">new_array</span><span class="p">(</span><span class="s2">&quot;int[][]&quot;</span><span class="p">,</span> <span class="p">[[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">new_array</span><span class="p">(</span><span class="s1">&#39;java.lang.Integer[][][]&#39;</span><span class="p">,</span> <span class="p">[[[</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">]],</span> <span class="p">[[</span><span class="mi">3</span><span class="p">]]])</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">new_array</span><span class="p">(</span><span class="s2">&quot;java.lang.Integer[]&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">agent</span><span class="o">.</span><span class="n">new_instance</span><span class="p">(</span><span class="s1">&#39;java.lang.Integer&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                                    <span class="n">agent</span><span class="o">.</span><span class="n">new_instance</span><span class="p">(</span><span class="s1">&#39;java.lang.Integer&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+                                    <span class="n">agent</span><span class="o">.</span><span class="n">new_instance</span><span class="p">(</span><span class="s1">&#39;java.lang.Integer&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">])])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr_type</strong> (<em>str</em>) – The type of the array.</p></li>
+<li><p><strong>arr_list</strong> (<em>list</em>) – The items of the array</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The new created array</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.frida.agent.FridaAgent.new_instance">
+<span class="sig-name descname"><span class="pre">new_instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/frida/agent.html#FridaAgent.new_instance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.frida.agent.FridaAgent.new_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new instance of a given class.</p>
+<p>Can be used as method’s param or a field’s value.</p>
+<p>Examples:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">agent</span><span class="o">.</span><span class="n">new_instance</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">new_instance</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mf">3.3</span><span class="p">])</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">new_instance</span><span class="p">(</span><span class="s2">&quot;java.lang.String&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;somestr&#39;</span><span class="p">])</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">new_instance</span><span class="p">(</span><span class="s2">&quot;com.example.SomeClass&quot;</span><span class="p">,</span> <span class="p">[[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]],</span> <span class="p">[</span><span class="s1">&#39;int[][]&#39;</span><span class="p">])</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">new_instance</span><span class="p">(</span><span class="s2">&quot;com.example.SomeClass&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                 <span class="p">[</span><span class="s1">&#39;java.lang.Integer&#39;</span><span class="p">,</span> <span class="s1">&#39;java.lang.Double&#39;</span><span class="p">,</span> <span class="s1">&#39;java.lang.Character&#39;</span><span class="p">,</span>
+                                 <span class="s1">&#39;java.lang.String&#39;</span><span class="p">,</span> <span class="s1">&#39;java.lang.Boolean&#39;</span><span class="p">,</span> <span class="s1">&#39;java.lang.Byte&#39;</span><span class="p">,</span>
+                                 <span class="s1">&#39;java.lang.Long&#39;</span><span class="p">,</span> <span class="s1">&#39;java.lang.Float&#39;</span><span class="p">])</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">new_instance</span><span class="p">(</span><span class="s2">&quot;com.example.SomeClass&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">agent</span><span class="o">.</span><span class="n">new_instance</span><span class="p">(</span><span class="s1">&#39;java.lang.Integer&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">])])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_name</strong> (<em>str</em>) – The full name of the class to create instance of</p></li>
+<li><p><strong>params</strong> (<em>list</em>) – The constructor’s parameters list</p></li>
+<li><p><strong>param_types</strong> (<em>list</em>) – The constructor’s parameters types list. This param is optional, if the constructor is overloaded you might need to specify the constructor param types.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The new created instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Instance</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.frida.agent.FridaAgent.run_js">
+<span class="sig-name descname"><span class="pre">run_js</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">js_code</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/frida/agent.html#FridaAgent.run_js"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.frida.agent.FridaAgent.run_js" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run Javascript code and get the result.</p>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ret_val</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">run_js</span><span class="p">(</span><span class="s2">&quot;3+5&quot;</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">ret_val</span> <span class="o">==</span> <span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>js_code</strong> (<em>str</em>) – The Javascript code to run</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The result value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="marrs.frida.agent.FridaAgent.set_static_field_value">
+<span class="sig-name descname"><span class="pre">set_static_field_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marrs/frida/agent.html#FridaAgent.set_static_field_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#marrs.frida.agent.FridaAgent.set_static_field_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of static field of a class.</p>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ret_val</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">get_static_field_value</span><span class="p">(</span><span class="s2">&quot;com.example.SomeClass&quot;</span><span class="p">,</span> <span class="s2">&quot;someStaticFieldName&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_name</strong> (<em>str</em>) – The name of the class</p></li>
+<li><p><strong>field_name</strong> (<em>str</em>) – The name of the field to get set its value</p></li>
+<li><p><strong>new_value</strong> – The new value to set</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="class.html" class="btn btn-neutral float-right" title="Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="app.html" class="btn btn-neutral float-left" title="App" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Oran Gilboa.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

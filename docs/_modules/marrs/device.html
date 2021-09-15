@@ -1,0 +1,672 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>marrs.device &mdash; Marrs 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Marrs
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html#getting-started">Getting started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main classes docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../device.html">Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../app.html">App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../agent.html">FridaAgent</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Java wrapper classes docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../class.html">Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../method.html">Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../field.html">Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../constructor.html">Constructor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../instance.html">Instance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../array.html">Array</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Marrs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>marrs.device</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for marrs.device</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Represents a connected Android Device</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="kn">from</span> <span class="nn">.android_manifest</span> <span class="kn">import</span> <span class="n">AndroidManifest</span>
+<span class="kn">from</span> <span class="nn">.app</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span> <span class="nn">.consts</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.files</span> <span class="kn">import</span> <span class="n">FilesOperations</span>
+<span class="kn">from</span> <span class="nn">.log</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.storage</span> <span class="kn">import</span> <span class="n">Storage</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="Device"><a class="viewcode-back" href="../../device.html#marrs.device.Device">[docs]</a><span class="k">class</span> <span class="nc">Device</span><span class="p">:</span>
+
+	<span class="k">def</span> <span class="nf">__get_all_apps__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s2">&quot;pm list packages -f&quot;</span><span class="p">)</span>
+		<span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+		<span class="n">res</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="s1">&#39;package:&#39;</span><span class="p">):],</span> <span class="n">res</span><span class="p">))</span>
+		<span class="n">apps</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+			<span class="n">eq_idx</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+			<span class="n">remote_apk_path</span> <span class="o">=</span> <span class="n">p</span><span class="p">[:</span><span class="n">eq_idx</span><span class="p">]</span>
+			<span class="n">package_name</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">eq_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+
+			<span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package_name</span><span class="p">,</span> <span class="n">remote_apk_path</span><span class="p">)</span>
+
+			<span class="n">apps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+		<span class="k">return</span> <span class="n">apps</span>
+
+	<span class="k">def</span> <span class="nf">__log__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">Log</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+		<span class="n">to_print</span> <span class="o">=</span> <span class="n">Fore</span><span class="o">.</span><span class="n">GREEN</span> <span class="o">+</span> <span class="s1">&#39;[&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">+</span> <span class="s1">&#39;] &#39;</span> <span class="o">+</span> <span class="n">Style</span><span class="o">.</span><span class="n">RESET_ALL</span> <span class="o">+</span> <span class="n">s</span>
+
+		<span class="k">if</span> <span class="n">extra_info</span><span class="p">:</span>
+			<span class="n">to_print</span> <span class="o">+=</span> <span class="s2">&quot; [&quot;</span> <span class="o">+</span> <span class="n">Style</span><span class="o">.</span><span class="n">BRIGHT</span> <span class="o">+</span> <span class="n">Fore</span><span class="o">.</span><span class="n">MAGENTA</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
+				<span class="n">extra_info</span><span class="p">)</span> <span class="o">+</span> <span class="n">Style</span><span class="o">.</span><span class="n">RESET_ALL</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span>
+
+		<span class="n">log</span><span class="p">(</span><span class="n">to_print</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span> <span class="n">do_style</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__warn__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="n">Fore</span><span class="o">.</span><span class="n">YELLOW</span> <span class="o">+</span> <span class="n">s</span><span class="p">,</span> <span class="n">Log</span><span class="o">.</span><span class="n">WARN</span><span class="p">,</span> <span class="n">extra_info</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__dlog__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="n">Fore</span><span class="o">.</span><span class="n">BLUE</span> <span class="o">+</span> <span class="n">Style</span><span class="o">.</span><span class="n">BRIGHT</span> <span class="o">+</span> <span class="n">s</span><span class="p">,</span> <span class="n">Log</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">extra_info</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__error__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="n">Fore</span><span class="o">.</span><span class="n">RED</span> <span class="o">+</span> <span class="n">Style</span><span class="o">.</span><span class="n">BRIGHT</span> <span class="o">+</span> <span class="n">s</span><span class="p">,</span> <span class="n">Log</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__success__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="n">Fore</span><span class="o">.</span><span class="n">GREEN</span> <span class="o">+</span> <span class="n">Style</span><span class="o">.</span><span class="n">BRIGHT</span> <span class="o">+</span> <span class="n">s</span><span class="p">,</span> <span class="n">Log</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__adb_prefix__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="s1">&#39;&quot;</span><span class="si">{0}</span><span class="s1">&quot; -s </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">adb_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">serial</span><span class="p">,</span> <span class="n">adb_path</span><span class="o">=</span><span class="s1">&#39;adb&#39;</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">serial</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">adb_path</span> <span class="o">=</span> <span class="n">adb_path</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="n">FilesOperations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+
+<div class="viewcode-block" id="Device.summary"><a class="viewcode-back" href="../../device.html#marrs.device.Device.summary">[docs]</a>	<span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Prints some details about the device.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+		<span class="k">def</span> <span class="nf">aux_print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+			<span class="n">pad</span> <span class="o">=</span> <span class="mi">15</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="n">Fore</span><span class="o">.</span><span class="n">CYAN</span> <span class="o">+</span> <span class="n">name</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">pad</span><span class="p">)</span> <span class="o">+</span> <span class="n">Style</span><span class="o">.</span><span class="n">RESET_ALL</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="s2">&quot;Device summary:&quot;</span><span class="p">)</span>
+		<span class="n">aux_print</span><span class="p">(</span><span class="s2">&quot;	Arch&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_arch</span><span class="p">())</span>
+		<span class="n">aux_print</span><span class="p">(</span><span class="s2">&quot;	Android ver.&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_android_version</span><span class="p">())</span>
+		<span class="n">aux_print</span><span class="p">(</span><span class="s2">&quot;	API level&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_api_level</span><span class="p">())</span>
+		<span class="n">aux_print</span><span class="p">(</span><span class="s2">&quot;	Is rooted&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_rooted</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Device.shell"><a class="viewcode-back" href="../../device.html#marrs.device.Device.shell">[docs]</a>	<span class="k">def</span> <span class="nf">shell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_root</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Run shell command on the device.</span>
+
+<span class="sd">		:param cmd: The cmd to run.</span>
+<span class="sd">		:type cmd: str</span>
+<span class="sd">		:param wait: Should wait for the execution to finish</span>
+<span class="sd">		:type wait: bool</span>
+<span class="sd">		:param as_root: Run the command as root (supported only on rooted device with `su` binary)</span>
+<span class="sd">		:type as_root: bool</span>
+<span class="sd">		:return: The output if wait=True, the Popen object otherwise.</span>
+<span class="sd">		:rtype: str</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">cmd</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> shell </span><span class="si">{1}</span><span class="s1"> &quot;</span><span class="si">{2}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__adb_prefix__</span><span class="p">(),</span> <span class="s2">&quot;su root&quot;</span> <span class="k">if</span> <span class="n">as_root</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">cmd</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="n">wait</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+		<span class="k">return</span> <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Device.get_apps"><a class="viewcode-back" href="../../device.html#marrs.device.Device.get_apps">[docs]</a>	<span class="k">def</span> <span class="nf">get_apps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name_substr</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Get a list of apps installed on the device.</span>
+<span class="sd">		:param name_substr: Specify to return apps which their name contains this string</span>
+<span class="sd">		:type name_substr: str</span>
+<span class="sd">		:return: A list of apps</span>
+<span class="sd">		:rtype: List of :py:class:`~marrs.app.App`s</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">apps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_all_apps__</span><span class="p">()</span>
+
+		<span class="k">if</span> <span class="n">name_substr</span><span class="p">:</span>
+			<span class="n">apps</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">app</span><span class="p">:</span> <span class="n">name_substr</span> <span class="ow">in</span> <span class="n">app</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">apps</span><span class="p">))</span>
+
+		<span class="k">return</span> <span class="n">apps</span></div>
+
+<div class="viewcode-block" id="Device.get_app_version"><a class="viewcode-back" href="../../device.html#marrs.device.Device.get_app_version">[docs]</a>	<span class="k">def</span> <span class="nf">get_app_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_name</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Get application installed version.</span>
+
+<span class="sd">		:param app_name: The full name of the app</span>
+<span class="sd">		:type app_name: str</span>
+<span class="sd">		:return: The version of the given app</span>
+<span class="sd">		:rtype: str</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_app</span><span class="p">(</span><span class="n">app_name</span><span class="p">):</span>
+			<span class="k">return</span> <span class="kc">None</span>
+
+		<span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s1">&#39;dumpsys package </span><span class="si">{0}</span><span class="s1"> | grep versionName&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">app_name</span><span class="p">))</span>
+		<span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;versionName=([\.\d]+)&#39;</span><span class="p">)</span>
+		<span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">res</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Device.install_app"><a class="viewcode-back" href="../../device.html#marrs.device.Device.install_app">[docs]</a>	<span class="k">def</span> <span class="nf">install_app</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">apk_path</span><span class="p">,</span> <span class="n">force_install</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Install an APK file on the device.</span>
+
+<span class="sd">		:param apk_path: The path to the APK file</span>
+<span class="sd">		:type apk_path: str</span>
+<span class="sd">		:param force_install: If True, will install the APK if the app with the same version is already installed on the device</span>
+<span class="sd">		:type force_install: bool</span>
+<span class="sd">		:return: The :py:class:`~marrs.app.App` object of the installed app</span>
+<span class="sd">		:rtype: :py:class:`~marrs.app.App`</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="s2">&quot;Installing app from apk (</span><span class="si">{0}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">apk_path</span><span class="p">))</span>
+
+		<span class="n">manifest</span> <span class="o">=</span> <span class="n">AndroidManifest</span><span class="o">.</span><span class="n">from_apk</span><span class="p">(</span><span class="n">apk_path</span><span class="p">)</span>
+		<span class="n">app_name</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">get_package_name</span><span class="p">()</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="s2">&quot;	Installing app&quot;</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="n">app_name</span><span class="p">)</span>
+
+		<span class="n">app</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_app</span><span class="p">(</span><span class="n">app_name</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="n">app</span><span class="p">:</span>
+			<span class="n">current_version</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_version</span><span class="p">()</span>
+			<span class="n">version_to_install</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">get_package_version</span><span class="p">()</span>
+
+			<span class="k">if</span> <span class="ow">not</span> <span class="n">force_install</span> <span class="ow">and</span> <span class="n">current_version</span> <span class="o">==</span> <span class="n">version_to_install</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">__warn__</span><span class="p">(</span>
+					<span class="s2">&quot;	The package &#39;</span><span class="si">{0}</span><span class="s2">&#39; with the same version (</span><span class="si">{1}</span><span class="s2">) is already installed on the device&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+						<span class="n">app_name</span><span class="p">,</span> <span class="n">current_version</span><span class="p">))</span>
+				<span class="k">return</span> <span class="n">app</span>
+
+			<span class="bp">self</span><span class="o">.</span><span class="n">__warn__</span><span class="p">(</span><span class="s2">&quot;	Package already installed on device, uninstalling version </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current_version</span><span class="p">))</span>
+
+			<span class="n">app</span><span class="o">.</span><span class="n">uninstall</span><span class="p">()</span>
+
+		<span class="n">check_output</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> install &quot;</span><span class="si">{1}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__adb_prefix__</span><span class="p">(),</span> <span class="n">apk_path</span><span class="p">))</span>
+
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_app</span><span class="p">(</span><span class="n">app_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Device.is_app_installed"><a class="viewcode-back" href="../../device.html#marrs.device.Device.is_app_installed">[docs]</a>	<span class="k">def</span> <span class="nf">is_app_installed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_name</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Check if app is installed on the device.</span>
+
+<span class="sd">		:param app_name: The name of the application</span>
+<span class="sd">		:type app_name: str</span>
+<span class="sd">		:return: True if the app is installed on the device, False otherwise.</span>
+<span class="sd">		:rtype: bool</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_app</span><span class="p">(</span><span class="n">app_name</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Device.uninstall_app"><a class="viewcode-back" href="../../device.html#marrs.device.Device.uninstall_app">[docs]</a>	<span class="k">def</span> <span class="nf">uninstall_app</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_name</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Uninstall application from the device.</span>
+
+<span class="sd">		:param app_name: The application&#39;s name to uninstall.</span>
+<span class="sd">		:type app_name: str</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="s2">&quot;Uninstalling app&quot;</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="n">app_name</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_app_installed</span><span class="p">(</span><span class="n">app_name</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">__warn__</span><span class="p">(</span><span class="s2">&quot;  App is not installed&quot;</span><span class="p">)</span>
+			<span class="k">return</span>
+
+		<span class="n">check_output</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> uninstall </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__adb_prefix__</span><span class="p">(),</span> <span class="n">app_name</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Device.get_app"><a class="viewcode-back" href="../../device.html#marrs.device.Device.get_app">[docs]</a>	<span class="k">def</span> <span class="nf">get_app</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_name</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Get app by name.</span>
+
+<span class="sd">		:param app_name: The name of the app</span>
+<span class="sd">		:type app_name: str</span>
+<span class="sd">		:return: :py:class:`~marrs.app.App` object if app with the given name is installed on the device, None otherwise.</span>
+<span class="sd">		:rtype: :py:class:`~marrs.app.App`</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">apps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_all_apps__</span><span class="p">()</span>
+
+		<span class="k">for</span> <span class="n">app</span> <span class="ow">in</span> <span class="n">apps</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">app</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">app_name</span><span class="p">:</span>
+				<span class="k">return</span> <span class="n">app</span>
+
+		<span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Device.is_app_running"><a class="viewcode-back" href="../../device.html#marrs.device.Device.is_app_running">[docs]</a>	<span class="k">def</span> <span class="nf">is_app_running</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_name</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Check if app is running.</span>
+
+<span class="sd">		:param app_name: The name of the app</span>
+<span class="sd">		:type app_name: str</span>
+<span class="sd">		:return: True if app is running, False otherwise.</span>
+<span class="sd">		:rtype: bool</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s2">&quot;pidof </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">app_name</span><span class="p">))</span>
+			<span class="k">return</span> <span class="kc">True</span>
+		<span class="k">except</span><span class="p">:</span>
+			<span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="Device.is_rooted"><a class="viewcode-back" href="../../device.html#marrs.device.Device.is_rooted">[docs]</a>	<span class="k">def</span> <span class="nf">is_rooted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Check if device is rooted (by trying to run &#39;su root&#39;).</span>
+
+<span class="sd">		:return: True if device is rooted, False otherwise.</span>
+<span class="sd">		:rtype: bool</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s1">&#39;su root </span><span class="se">\\</span><span class="s1">&quot;echo</span><span class="se">\\</span><span class="s1">&quot; &gt; /dev/null 2&gt;&amp;1; echo $?&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span></div>
+
+<div class="viewcode-block" id="Device.get_android_version"><a class="viewcode-back" href="../../device.html#marrs.device.Device.get_android_version">[docs]</a>	<span class="k">def</span> <span class="nf">get_android_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Returns the android version of the device.</span>
+
+<span class="sd">		:return: Android version of the device</span>
+<span class="sd">		:rtype: str</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s2">&quot;getprop ro.build.version.release&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Device.get_api_level"><a class="viewcode-back" href="../../device.html#marrs.device.Device.get_api_level">[docs]</a>	<span class="k">def</span> <span class="nf">get_api_level</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Returns the API level of the device.</span>
+
+<span class="sd">		:return: API level of the device</span>
+<span class="sd">		:rtype: str</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s2">&quot;getprop ro.build.version.sdk&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Device.get_arch"><a class="viewcode-back" href="../../device.html#marrs.device.Device.get_arch">[docs]</a>	<span class="k">def</span> <span class="nf">get_arch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Returns the architechture of the device (arm64 / arm / x86_64 / x86)</span>
+
+<span class="sd">		:return: The architecture of the device</span>
+<span class="sd">		:rtype: str</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s2">&quot;getprop ro.product.cpu.abi&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+		<span class="n">archs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;arm64&#39;</span><span class="p">,</span> <span class="s1">&#39;arm&#39;</span><span class="p">,</span> <span class="s1">&#39;x86_64&#39;</span><span class="p">,</span> <span class="s1">&#39;x86&#39;</span><span class="p">]</span>
+		<span class="k">for</span> <span class="n">arch</span> <span class="ow">in</span> <span class="n">archs</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">arch</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+				<span class="k">return</span> <span class="n">arch</span>
+
+		<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Failed identify arch : `</span><span class="si">{0}</span><span class="s1">`&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">res</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Device.is_frida_server_running"><a class="viewcode-back" href="../../device.html#marrs.device.Device.is_frida_server_running">[docs]</a>	<span class="k">def</span> <span class="nf">is_frida_server_running</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frida_process_name</span><span class="o">=</span><span class="s1">&#39;frida-server&#39;</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Check if frida server is running on the device.</span>
+
+<span class="sd">		:param frida_process_name: The name of the frida server process</span>
+<span class="sd">		:type frida_process_name: str</span>
+<span class="sd">		:return: True if frida server is running, False otherwise.</span>
+<span class="sd">		:rtype: bool</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="n">frida_process_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s2">&quot;ps&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Device.kill_frida_server"><a class="viewcode-back" href="../../device.html#marrs.device.Device.kill_frida_server">[docs]</a>	<span class="k">def</span> <span class="nf">kill_frida_server</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Kills frida server&#39;s procces.</span>
+
+<span class="sd">		:raises: Exception: If failed to kill the process</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="s2">&quot;Killing frida server process&quot;</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_frida_server_running</span><span class="p">():</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">__warn__</span><span class="p">(</span><span class="s2">&quot;Frida server is not running on device&quot;</span><span class="p">)</span>
+			<span class="k">return</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s2">&quot;pkill frida-server&quot;</span><span class="p">,</span> <span class="n">as_root</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+		<span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s2">&quot;echo&quot;</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_frida_server_running</span><span class="p">():</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to kill frida server&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Device.delete_frida_server"><a class="viewcode-back" href="../../device.html#marrs.device.Device.delete_frida_server">[docs]</a>	<span class="k">def</span> <span class="nf">delete_frida_server</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Deletes all the files which their path mathches the following pattern: &#39;/data/local/tmp/frida-server-\*&#39;</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s2">&quot;rm /data/local/tmp/frida-server-* 1&gt; /dev/null 2&gt;&amp;1&quot;</span><span class="p">)</span></div>
+
+	<span class="k">def</span> <span class="nf">__upload_frida_server__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">FRIDA_SERVER_VERSION</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">arch</span><span class="p">:</span>
+			<span class="n">arch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_arch</span><span class="p">()</span>
+
+		<span class="n">extra_info</span> <span class="o">=</span> <span class="s2">&quot;arch=</span><span class="si">{arch}</span><span class="s2">, version=</span><span class="si">{version}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+			<span class="n">arch</span><span class="o">=</span><span class="n">arch</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="s2">&quot;Uploading frida server to device&quot;</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="n">extra_info</span><span class="p">)</span>
+
+		<span class="n">frida_server_filename</span> <span class="o">=</span> <span class="n">FRIDA_SERVER_FILENAME</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+			<span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="n">arch</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">__dlog__</span><span class="p">(</span><span class="s2">&quot;frida_server_filename = &quot;</span> <span class="o">+</span> <span class="n">frida_server_filename</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="n">Storage</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">frida_server_filename</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span>
+				<span class="s2">&quot;Frida server exists in local storage&quot;</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="n">extra_info</span><span class="p">)</span>
+
+			<span class="n">frida_server_local_filepath</span> <span class="o">=</span> <span class="n">Storage</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">frida_server_filename</span><span class="p">)</span>
+
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">__dlog__</span><span class="p">(</span>
+				<span class="s2">&quot;Frida server doesn&#39;t exist in local storage&quot;</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="n">extra_info</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span>
+				<span class="s2">&quot;Trying to download it from the internet&quot;</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="n">extra_info</span><span class="p">)</span>
+
+			<span class="n">frida_server_url</span> <span class="o">=</span> <span class="n">FRIDA_SERVER_DOWNLOAD_URL</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+				<span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">frida_server_filename</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">__dlog__</span><span class="p">(</span><span class="s2">&quot;frida_server_url = &quot;</span> <span class="o">+</span> <span class="n">frida_server_url</span><span class="p">)</span>
+
+			<span class="n">filename</span> <span class="o">=</span> <span class="n">get_filename_from_url</span><span class="p">(</span><span class="n">frida_server_url</span><span class="p">)</span>
+			<span class="n">dest_file_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Storage</span><span class="o">.</span><span class="n">create_temp_dir</span><span class="p">(),</span> <span class="n">filename</span><span class="p">)</span>
+			<span class="n">frida_server_file_path</span> <span class="o">=</span> <span class="n">download_from_url</span><span class="p">(</span><span class="n">frida_server_url</span><span class="p">,</span> <span class="n">dest_file_path</span><span class="p">)</span>
+
+			<span class="k">if</span> <span class="ow">not</span> <span class="n">frida_server_file_path</span><span class="p">:</span>
+				<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed download frida server from the internet&quot;</span><span class="p">)</span>
+
+			<span class="bp">self</span><span class="o">.</span><span class="n">__dlog__</span><span class="p">(</span><span class="s2">&quot;frida_server_file_path = &quot;</span> <span class="o">+</span> <span class="n">frida_server_file_path</span><span class="p">)</span>
+
+			<span class="n">Storage</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">frida_server_file_path</span><span class="p">)</span>
+
+			<span class="n">frida_server_local_filepath</span> <span class="o">=</span> <span class="n">extract_xz_file</span><span class="p">(</span><span class="n">frida_server_file_path</span><span class="p">)</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">__dlog__</span><span class="p">(</span><span class="s2">&quot;frida_server_local_filepath = &quot;</span> <span class="o">+</span> <span class="n">frida_server_local_filepath</span><span class="p">)</span>
+
+		<span class="n">frida_server_remote_path</span> <span class="o">=</span> <span class="n">FRIDA_SERVER_REMOTE_PATH</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+			<span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="n">arch</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">__dlog__</span><span class="p">(</span><span class="s2">&quot;frida_server_remote_path = &quot;</span> <span class="o">+</span> <span class="n">frida_server_remote_path</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">frida_server_local_filepath</span><span class="p">,</span> <span class="n">frida_server_remote_path</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Device.run_frida_server"><a class="viewcode-back" href="../../device.html#marrs.device.Device.run_frida_server">[docs]</a>	<span class="k">def</span> <span class="nf">run_frida_server</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frida_server_version</span><span class="o">=</span><span class="n">FRIDA_SERVER_VERSION</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Run frida server of the given version on the device.</span>
+<span class="sd">		First it will check if the binary is already exists on the device. If so, will run it.</span>
+<span class="sd">		If it doesn&#39;t exist, it will check if the binary exists in the package&#39;s store. If so, it will take it from there.</span>
+<span class="sd">		Otherwise, it will try to download the binary from the internet, upload it and run it on the device.</span>
+
+<span class="sd">		:param frida_server_version: the frida server&#39;s version to run on the device</span>
+<span class="sd">		:type frida_server_version: str</span>
+<span class="sd">		:raise Exception: If the device is not rooted or if failed to run frida server on the device.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="s2">&quot;Running frida server on device&quot;</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_frida_server_running</span><span class="p">():</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">__warn__</span><span class="p">(</span><span class="s2">&quot;	Frida server is already running on device&quot;</span><span class="p">)</span>
+			<span class="k">return</span>
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_rooted</span><span class="p">():</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Device must be rooted in order to run frida server&quot;</span><span class="p">)</span>
+			<span class="k">return</span>
+
+		<span class="n">arch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_arch</span><span class="p">()</span>
+		<span class="n">extra_info</span> <span class="o">=</span> <span class="s2">&quot;arch=</span><span class="si">{arch}</span><span class="s2">, version=</span><span class="si">{version}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+			<span class="n">arch</span><span class="o">=</span><span class="n">arch</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">frida_server_version</span><span class="p">)</span>
+
+		<span class="n">frida_server_remote_path</span> <span class="o">=</span> <span class="n">FRIDA_SERVER_REMOTE_PATH</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+			<span class="n">version</span><span class="o">=</span><span class="n">frida_server_version</span><span class="p">,</span> <span class="n">arch</span><span class="o">=</span><span class="n">arch</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">frida_server_remote_path</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span>
+				<span class="s2">&quot;	Frida server file is already exists on device&quot;</span><span class="p">,</span>
+				<span class="n">extra_info</span><span class="o">=</span><span class="n">extra_info</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">__warn__</span><span class="p">(</span><span class="s2">&quot;	Frida server file doesn&#39;t exist on device&quot;</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">__upload_frida_server__</span><span class="p">(</span><span class="n">frida_server_version</span><span class="p">,</span> <span class="n">arch</span><span class="p">)</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s2">&quot;chmod +x </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">frida_server_remote_path</span><span class="p">),</span> <span class="n">as_root</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span>
+			<span class="s2">&quot;nohup .</span><span class="si">{0}</span><span class="s2"> &amp;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">frida_server_remote_path</span><span class="p">),</span>
+			<span class="n">wait</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+			<span class="n">as_root</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+		<span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_frida_server_running</span><span class="p">():</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed run frida server on the device&quot;</span><span class="p">)</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">__success__</span><span class="p">(</span><span class="s2">&quot;	Frida server is now running on device&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Device.start_app"><a class="viewcode-back" href="../../device.html#marrs.device.Device.start_app">[docs]</a>	<span class="k">def</span> <span class="nf">start_app</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_name</span><span class="p">,</span> <span class="n">main_activity</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Start application on the device.</span>
+<span class="sd">		Will do nothing if app is already running.</span>
+
+<span class="sd">		:param app_name: The name of the app to start.</span>
+<span class="sd">		:type app_name: str</span>
+<span class="sd">		:param main_activity: the main activity of the application to start. If None, it will extract it from the app&#39;s apk that exists on the device.</span>
+<span class="sd">		:type main_activity: str</span>
+<span class="sd">		:raise Exception: If the device is not rooted or if failed to run frida server on the device.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="s2">&quot;Starting app&quot;</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="n">app_name</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_app_running</span><span class="p">(</span><span class="n">app_name</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">__warn__</span><span class="p">(</span><span class="s2">&quot;	App is already running on device&quot;</span><span class="p">)</span>
+			<span class="k">return</span>
+
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">main_activity</span><span class="p">:</span>
+			<span class="n">app</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_app</span><span class="p">(</span><span class="n">app_name</span><span class="p">)</span>
+			<span class="n">main_activity</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_main_activity</span><span class="p">()</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="s2">&quot;	Main activity is &#39;</span><span class="si">{0}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">main_activity</span><span class="p">))</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s2">&quot;am start -n </span><span class="si">{0}</span><span class="s2">/</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">app_name</span><span class="p">,</span> <span class="n">main_activity</span><span class="p">))</span>
+
+		<span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Device.force_stop_app"><a class="viewcode-back" href="../../device.html#marrs.device.Device.force_stop_app">[docs]</a>	<span class="k">def</span> <span class="nf">force_stop_app</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_name</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Force stop application.</span>
+
+<span class="sd">		:param app_name: The name of the app to force stop.</span>
+<span class="sd">		:type app_name: str</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="s2">&quot;Force stop app&quot;</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="n">app_name</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s2">&quot;am force-stop </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">app_name</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Device.clear_app_data"><a class="viewcode-back" href="../../device.html#marrs.device.Device.clear_app_data">[docs]</a>	<span class="k">def</span> <span class="nf">clear_app_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_name</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Clear application data.</span>
+
+<span class="sd">		:param app_name: The name of the app to clear data for.</span>
+<span class="sd">		:type app_name: str</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">__log__</span><span class="p">(</span><span class="s2">&quot;Clearing app data&quot;</span><span class="p">,</span> <span class="n">extra_info</span><span class="o">=</span><span class="n">app_name</span><span class="p">)</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s2">&quot;pm clear </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">app_name</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Oran Gilboa.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
