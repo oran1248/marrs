@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
 	name='marrs',
-	version='1.0.0',
+	version='1.0.1',
 	author='Oran Gilboa',
 	author_email='oran.gilboa1@gmail.com',
 	package_dir={'': 'src'},
