@@ -4,6 +4,7 @@
 3. Create new release in github
 4. Copy the link of the "Source code (tag.gz)" of the new release
 5. Update "download_url" in setup.py file with the link of the release
+6. Push code to main branch in github repo
 7. Run under marrs folder:
 
         rm -rf dist
