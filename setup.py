@@ -10,7 +10,7 @@ setup(
 	package_data={'marrs': ['data/bundle.js']},
 	scripts=[],
 	url='https://github.com/oran1248/marrs',
-	download_url='https://github.com/oran1248/marrs/archive/refs/tags/1.0.1.tar.gz',
+	download_url='https://github.com/oran1248/marrs/archive/refs/tags/1.0.2.tar.gz',
 	license='GNU GPL v3',
 	description='Python package for Android Java apps researchers, built on top of tools like frida and adb',
 	long_description='Marrs is a Python package for Android Java apps researchers, built on top of tools like frida and adb. Using Marrs you can write Python code that modifies fields\' value, calls methods, creates instances, hooks methods and more.',

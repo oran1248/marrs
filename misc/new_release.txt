@@ -6,5 +6,7 @@
 5. Update "download_url" in setup.py file with the link of the release
 7. Run under marrs folder:
 
+        rm -rf dist
+        rm -rf build
         python setup.py sdist
         twine upload dist/*
