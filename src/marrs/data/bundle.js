@@ -308,7 +308,9 @@ class JS {
                 className = matches[1].replace(/\//g, ".");
             }
 
-            allClasses.push(className);
+            if (!allClasses.includes(className)) {
+                allClasses.push(className);
+            }
         });
 
         return allClasses;
