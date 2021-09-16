@@ -82,10 +82,17 @@ with the fix.
 
 Steps for running the tests:
 
-1. Install `pytest` package
-2. Build `test-app` app - it's a simple android app used for testing Marrs
+1. Install `pytest` package:
+   `pip install pytest`
+
+2. Build `test-app` app - it's a simple android app used for testing Marrs:
+   `cd test-app`
+   `gradlew build`
+
 3. Install test-app's APK on a connected rooted device
-4. Run `python -m pytest` in the main folder of the project
+4. Run the tests:
+   `cd misc`
+   `run_tests.bat`
 
 ## Contributing
 
