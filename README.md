@@ -75,8 +75,7 @@ For more examples, please refer to the [docs](https://oran1248.github.io/marrs/)
 ## Caveat
 
 Marrs wasn't tested on all the platforms and devices.  
-If you run into a bug, you can [open an issue](issues), or even better than that - fix it and create a PR. create a PR
-with the fix.
+If you run into a bug, you can [open an issue](issues), or even better than that - fix it and create a PR.
 
 ## Running Tests
 
